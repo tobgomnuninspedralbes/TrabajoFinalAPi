@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: java-app
-        path: '${{ github.workspace }}/target/*.jar'
+        path: '${{ github.workspace }}/target/*.war'
 
   deploy:
     runs-on: ubuntu-latest
@@ -56,4 +56,4 @@ jobs:
         app-name: 'TrabajoFinalApi'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_fd4c0cd46af34e378a98e035fe143e98 }}
-        package: '*.jar'
+        package: '*.war'
