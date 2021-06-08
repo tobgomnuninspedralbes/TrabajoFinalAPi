@@ -105,11 +105,11 @@
       <artifactId>jboss-jsp-api_2.3_spec</artifactId>
       <version>1.0.1.Final</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.taglibs</groupId>
       <artifactId>taglibs-standard-compat</artifactId>
       <version>1.2.6-RC1</version>
-    </dependency>
+    </dependency> -->
     <dependency>
       <groupId>org.apache.taglibs</groupId>
       <artifactId>taglibs-standard-impl</artifactId>
