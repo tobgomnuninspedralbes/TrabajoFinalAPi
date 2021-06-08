@@ -165,7 +165,7 @@
       <artifactId>hibernate-validator</artifactId>
       <version>5.3.5.Final</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.picketbox</groupId>
       <artifactId>picketbox</artifactId>
       <version>5.0.2.Final</version>
@@ -179,7 +179,7 @@
       <groupId>org.picketbox</groupId>
       <artifactId>picketbox-infinispan</artifactId>
       <version>5.0.2.Final</version>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.wildfly.core</groupId>
       <artifactId>wildfly-controller-client</artifactId>
