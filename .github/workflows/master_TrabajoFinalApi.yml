@@ -25,7 +25,7 @@ jobs:
       run: mvn clean install
       
     - name: mirar
-      run: ls '${{ github.workspace }}/target'
+      run: tree '${{ github.workspace }}/target'
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
