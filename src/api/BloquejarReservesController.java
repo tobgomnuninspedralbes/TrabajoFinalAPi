@@ -19,7 +19,6 @@ public class BloquejarReservesController extends HttpServlet {
      */
     public BloquejarReservesController() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
