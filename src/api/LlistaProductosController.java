@@ -1,11 +1,29 @@
 package api;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
+
+import com.google.gson.Gson;
+
+import api.models.Complemento;
+import api.models.Producto;
+import database.DatabaseConnection;
+import database.DatabaseQueries;
 
 /**
  * Servlet implementation class LlistaProductosController
@@ -26,16 +44,82 @@ public class LlistaProductosController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int categoria = Integer.valueOf(request.getParameter("categoriaId"));
+		Connection con = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		con = DatabaseConnection.getConnection();
+		try {
+			st = con.prepareStatement(DatabaseQueries.GET_LLISTA_PRODUCTES);
+			st.setInt(1, categoria);
+			rs = st.executeQuery();
+			List<Producto> list = new ArrayList<>();
+			while(rs.next()) {
+				Producto c = new Producto();
+				c.setId(rs.getInt(1));
+				c.setNom(rs.getString(2));
+				c.setDescripcion(rs.getString(3));
+				c.setPreu(rs.getFloat(4));
+				c.setCategoria(rs.getInt(5));
+				File foto = new File(rs.getString(6));
+				String b64 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto));
+				c.setFoto(b64);
+				List<Complemento> listComp = getComplementos(c.getId());
+				c.setComplementos(listComp);
+				list.add(c);
+			}
+			String l = new Gson().toJson(list);
+			response.getWriter().append(l);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public List<Complemento> getComplementos(int producto){
+		Connection con = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		
+		con = DatabaseConnection.getConnection();
+		try {
+			st = con.prepareStatement(DatabaseQueries.GET_LLISTA_COMPLEMENTS_PRODUCTE);
+			st.setInt(1, producto);
+			rs = st.executeQuery();
+			List<Complemento> lista = new ArrayList<>();
+			while(rs.next()) {
+				Complemento c = new Complemento();
+				c.setId(rs.getInt(1));
+				c.setNom(rs.getString(2));
+				c.setPreu(rs.getFloat(3));
+				lista.add(c);
+			}
+			return lista;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

@@ -3,13 +3,15 @@ package api.models;
 import java.util.List;
 
 public class Reserva {
+	public static final String BLOQUEJADA = "Bloquejada";
 	int id;
 	float preu;
 	Usuario usuario;
 	String estado;
 	String horaRealizacion;
 	String horaReserva;
-	List<Item> llistaItems;
+	List<Producto> llistaProductos;
+	List<Menu> llistaMenus;
 	
 	public int getId() {
 		return id;
@@ -41,11 +43,17 @@ public class Reserva {
 	public void setHoraReserva(String horaReserva) {
 		this.horaReserva = horaReserva;
 	}
-	public List<Item> getLlistaItems() {
-		return llistaItems;
+	public List<Producto> getLlistaProductos() {
+		return llistaProductos;
 	}
-	public void setLlistaItems(List<Item> llistaItems) {
-		this.llistaItems = llistaItems;
+	public void setLlistaProductos(List<Producto> llistaProductos) {
+		this.llistaProductos = llistaProductos;
+	}
+	public List<Menu> getLlistaMenus() {
+		return llistaMenus;
+	}
+	public void setLlistaMenus(List<Menu> llistaMenus) {
+		this.llistaMenus = llistaMenus;
 	}
 	public float getPreu() {
 		return preu;

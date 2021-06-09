@@ -34,14 +34,14 @@ import database.DatabaseQueries;
 /**
  * Servlet implementation class LlistaReservaController
  */
-@WebServlet("/reserva/lista")
-public class LlistaReservaController extends HttpServlet {
+@WebServlet("/reserva/lista/usuario")
+public class LlistaReservaUsuariController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LlistaReservaController() {
+    public LlistaReservaUsuariController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -50,8 +50,9 @@ public class LlistaReservaController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int usuariId = Integer.valueOf(request.getParameter("usuariId"));
 		Connection con = null;
-		Statement st = null;
+		PreparedStatement st = null;
 		PreparedStatement stUs = null;
 		ResultSet rs = null;
 		ResultSet rsUs = null;
@@ -60,8 +61,9 @@ public class LlistaReservaController extends HttpServlet {
 		
 		con = DatabaseConnection.getConnection();
 		try {
-			st = con.createStatement();
-			rs = st.executeQuery(DatabaseQueries.GET_LLISTA_RESERVES_AVUI);
+			st = con.prepareStatement(DatabaseQueries.GET_LLISTA_RESERVES_USUARI);
+			st.setInt(1, usuariId);
+			rs = st.executeQuery();
 			List<Reserva> list = new ArrayList<>();
 			while(rs.next()) {
 				Reserva c = new Reserva();
@@ -210,6 +212,7 @@ public class LlistaReservaController extends HttpServlet {
 		}
 		return null;
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

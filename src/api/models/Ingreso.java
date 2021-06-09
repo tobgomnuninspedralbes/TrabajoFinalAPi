@@ -2,7 +2,7 @@ package api.models;
 
 public class Ingreso {
 	int id;
-	Usuario usuario;
+	int usuarioID;
 	float importe;
 	String fecha;
 	public int getId() {
@@ -11,11 +11,11 @@ public class Ingreso {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Usuario getUsuario() {
-		return usuario;
+	public int getUsuarioID() {
+		return usuarioID;
 	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioID(int usuarioID) {
+		this.usuarioID = usuarioID;
 	}
 	public float getImporte() {
 		return importe;

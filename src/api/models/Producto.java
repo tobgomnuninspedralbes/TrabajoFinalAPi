@@ -6,7 +6,7 @@ public class Producto extends Item{
 	String nom;
 	float preu;
 	String descripcion;
-	Categoria categoria;
+	int categoria;
 	String foto;
 	List<Complemento> complementos;
 	
@@ -22,10 +22,10 @@ public class Producto extends Item{
 	public void setPreu(float preu) {
 		this.preu = preu;
 	}
-	public Categoria getCategoria() {
+	public int getCategoria() {
 		return categoria;
 	}
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(int categoria) {
 		this.categoria = categoria;
 	}
 	public String getFoto() {
