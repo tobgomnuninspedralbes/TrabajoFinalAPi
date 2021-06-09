@@ -76,15 +76,15 @@ public class ReservaController extends HttpServlet {
 			for(Producto p : c.getLlistaProductos()) {
 				st2.setInt(1, c.getId());
 				st2.setInt(2, p.getId());
-				 r = stC.executeQuery(DatabaseQueries.GET_ID_ULTIMA_ITEM_RESERVA);
-				 r.next();
-				 int lastId = r.getInt(1);
-				 for(Complemento comp : p.getComplementos()) {
-					 st3.setInt(1, lastId);
-					 st3.setInt(2, comp.getId());
-					 st3.execute();
-				 }
-				 st2.execute();
+				r = stC.executeQuery(DatabaseQueries.GET_ID_ULTIMA_ITEM_RESERVA);
+				r.next();
+				int lastId = r.getInt(1);
+				for(Complemento comp : p.getComplementos()) {
+					st3.setInt(1, lastId);
+					st3.setInt(2, comp.getId());
+					st3.execute();
+				}
+				st2.execute();
 			}
 			
 			if(st.execute()){
