@@ -82,7 +82,9 @@ public class ReservaController extends HttpServlet {
 				 for(Complemento comp : p.getComplementos()) {
 					 st3.setInt(1, lastId);
 					 st3.setInt(2, comp.getId());
+					 st3.execute();
 				 }
+				 st2.execute();
 			}
 			
 			if(st.execute()){
