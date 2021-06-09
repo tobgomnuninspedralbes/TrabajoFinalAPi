@@ -55,7 +55,7 @@ public class ListaIngresosController extends HttpServlet {
 				Ingreso c = new Ingreso();
 				c.setId(rs.getInt(1));
 				c.setUsuarioID(rs.getInt(2));
-				c.setImporte(rs.getFloat(3));
+				c.setImporte(rs.getBigDecimal(3).floatValue());
 				c.setFecha(rs.getString(4));
 				lista.add(c);
 			}

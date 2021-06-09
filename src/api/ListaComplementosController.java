@@ -55,7 +55,7 @@ public class ListaComplementosController extends HttpServlet {
 				Complemento c = new Complemento();
 				c.setId(rs.getInt(1));
 				c.setNom(rs.getString(2));
-				c.setPreu(rs.getFloat(3));
+				c.setPreu(rs.getBigDecimal(3).floatValue());
 				lista.add(c);
 			}
 			String l = new Gson().toJson(lista);

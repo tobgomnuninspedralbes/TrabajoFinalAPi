@@ -3,6 +3,9 @@ package database;
 import api.models.Reserva;
 
 public class DatabaseQueries {
+	public static final String POST_ITEM = "INSERT INTO Items VALUES()";
+	public static final String GET_ID_ULTIMO_ITEM = "SELECT id FROM Items ORDER BY id DESC LIMIT 1";
+	
 	public static final String GET_LLISTA_CATEGORIES = "SELECT * FROM Categorias";
 	public static final String GET_ID_ULTIMA = "SELECT id FROM Categorias ORDER BY id DESC LIMIT 1";
 	public static final String POST_CATEGORIA = "INSERT INTO Categorias (nom, foto) VALUES(?,?)";
@@ -11,13 +14,13 @@ public class DatabaseQueries {
 	public static final String GET_LLISTA_PRODUCTES = "SELECT * FROM Productos WHERE categoriaId = ?";
 	public static final String GET_ID_ULTIMA_PRODUCTE = "SELECT id FROM Productos ORDER BY id DESC LIMIT 1";
 	public static final String GET_PRODUCTE = "SELECT * FROM Productos WHERE id = ?";
-	public static final String POST_PRODUCTE = "INSERT INTO Productos(nom, descripcion, preu, categoriaId, foto) VALUES(?,?,?, ?, ?, ?)";
+	public static final String POST_PRODUCTE = "INSERT INTO Productos(id, nom, descripcion, preu, categoriaId, foto) VALUES(?,?,?, ?, ?, ?)";
 	public static final String DELETE_PRODUCTE = "DELETE FROM Productos WHERE id = ?";
 	
 	public static final String GET_LLISTA_MENUS = "SELECT * FROM Menus";
 	public static final String GET_MENU = "SELECT * FROM Menus WHERE id = ?";
 	public static final String GET_PLAT_MENU = "SELECT * FROM Platos WHERE id = ?";
-	public static final String POST_MENU = "INSERT INTO Menus(dia, mida, preu, primerPlatId, segonPlatId) VALUES(?,?,?,?,?)";
+	public static final String POST_MENU = "INSERT INTO Menus(id, dia, mida, preu, primerPlatId, segonPlatId) VALUES(?,?,?,?,?,?)";
 	public static final String DELETE_MENU = "DELETE FROM Menus WHERE id = ?";
 	
 	public static final String GET_LLISTA_USUARIS = "SELECT * FROM Usuarios";

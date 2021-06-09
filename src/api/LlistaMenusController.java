@@ -62,7 +62,7 @@ public class LlistaMenusController extends HttpServlet {
 				c.setId(rs.getInt(1));
 				c.setDia(rs.getString(2));
 				c.setMida(rs.getInt(3));
-				c.setPreu(rs.getFloat(4));
+				c.setPreu(rs.getBigDecimal(4).floatValue());
 				
 				int pp = rs.getInt(5);
 				int sp = rs.getInt(6);

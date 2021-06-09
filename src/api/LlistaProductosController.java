@@ -60,7 +60,7 @@ public class LlistaProductosController extends HttpServlet {
 				c.setId(rs.getInt(1));
 				c.setNom(rs.getString(2));
 				c.setDescripcion(rs.getString(3));
-				c.setPreu(rs.getFloat(4));
+				c.setPreu(rs.getBigDecimal(4).floatValue());
 				c.setCategoria(rs.getInt(5));
 				File foto = new File(rs.getString(6));
 				String b64 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto));
@@ -99,7 +99,7 @@ public class LlistaProductosController extends HttpServlet {
 				Complemento c = new Complemento();
 				c.setId(rs.getInt(1));
 				c.setNom(rs.getString(2));
-				c.setPreu(rs.getFloat(3));
+				c.setPreu(rs.getBigDecimal(3).floatValue());
 				lista.add(c);
 			}
 			return lista;

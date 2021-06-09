@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +85,7 @@ public class ComplementoController extends HttpServlet {
 			st = con.prepareStatement(DatabaseQueries.POST_COMPLEMENT);
 			Complemento c = new Gson().fromJson(request.getReader().readLine(), Complemento.class);
 			st.setString(1, c.getNom());
-			st.setFloat(2, c.getPreu());
+			st.setBigDecimal(2, BigDecimal.valueOf(c.getPreu()));
 			st.execute();
 			response.getWriter().append("Success");
 		} catch (SQLException e) {

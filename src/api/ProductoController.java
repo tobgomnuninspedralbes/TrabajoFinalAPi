@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,29 +54,34 @@ public class ProductoController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection con = null;
 		PreparedStatement st = null;
-		Statement st2 = null;
-		ResultSet rs = null;
+		Statement s = null;
+		Statement s1 = null;
+		ResultSet r = null;
 		
 		con = DatabaseConnection.getConnection();
 		try {
+			s = con.createStatement();
+			s.execute(DatabaseQueries.POST_ITEM);
+			s1 = con.createStatement();
+			r = s1.executeQuery(DatabaseQueries.GET_ID_ULTIMO_ITEM);
+			r.next();
+			int id = r.getInt(1);
 			st = con.prepareStatement(DatabaseQueries.POST_PRODUCTE);
 			Producto c = new Gson().fromJson(request.getReader().readLine(), Producto.class);
-			st.setString(1, c.getNom());
-			st.setString(2, c.getDescripcion());
-			st.setInt(3, c.getCategoria());
+			st.setInt(1, id);
+			st.setString(2, c.getNom());
+			st.setString(3, c.getDescripcion());
+			st.setInt(4, c.getCategoria());
+			st.setBigDecimal(5, BigDecimal.valueOf(c.getPreu()));
 			
-			st2 = con.createStatement();
-			rs = st2.executeQuery(DatabaseQueries.GET_ID_ULTIMA_PRODUCTE);
-			rs.next();
-			int lastId = rs.getInt(1);
 			if(c.getFoto()!=null) {
 				byte[] decodedImg = Base64.getDecoder()
 	                    .decode(c.getFoto().getBytes(StandardCharsets.UTF_8));
-				Path destinationFile = Paths.get("./fotos", "prod"+lastId+".jpg");
+				Path destinationFile = Paths.get("./fotos", "prod"+id+".jpg");
 				Files.write(destinationFile, decodedImg);
-				st.setString(4, destinationFile.toString());
+				st.setString(6, destinationFile.toString());
 			} else {
-				st.setString(4, null);
+				st.setString(6, null);
 			}
 			
 			if(st.execute()) {

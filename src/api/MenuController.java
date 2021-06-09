@@ -1,9 +1,12 @@
 package api;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,17 +46,27 @@ public class MenuController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Connection con = null;
+		Statement s = null;
+		Statement s1 = null;
+		ResultSet rs = null;
 		PreparedStatement st = null;
 		
 		con = DatabaseConnection.getConnection();
 		try {
+			s = con.createStatement();
+			s.execute(DatabaseQueries.POST_ITEM);
+			s1 = con.createStatement();
+			rs = s1.executeQuery(DatabaseQueries.GET_ID_ULTIMO_ITEM);
+			rs.next();
+			int id = rs.getInt(1);
 			st = con.prepareStatement(DatabaseQueries.POST_MENU);
 			Menu c = new Gson().fromJson(request.getReader().readLine(), Menu.class);
-			st.setString(1, c.getDia());
-			st.setInt(2, c.getMida());
-			st.setFloat(3, c.getPreu());
-			st.setInt(4, c.getPrimerPlat().getId());
-			st.setInt(5, c.getSegonPlat().getId());
+			st.setInt(1, id);
+			st.setString(2, c.getDia());
+			st.setInt(3, c.getMida());
+			st.setBigDecimal(4, BigDecimal.valueOf(c.getPreu()));
+			st.setInt(5, c.getPrimerPlat().getId());
+			st.setInt(6, c.getSegonPlat().getId());
 			st.execute();
 			response.getWriter().append("Success");
 		} catch (SQLException e) {

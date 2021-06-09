@@ -1,6 +1,7 @@
 package api;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -60,9 +61,10 @@ public class ReservaController extends HttpServlet {
 			st = con.prepareStatement(DatabaseQueries.POST_RESERVA);
 			Reserva c = new Gson().fromJson(request.getReader().readLine(), Reserva.class);
 			st.setInt(1, c.getUsuario().getId());
-			st.setString(2, c.getEstado());
-			st.setString(3, c.getHoraRealizacion());
-			st.setString(4, c.getHoraReserva());
+			st.setBigDecimal(2, BigDecimal.valueOf(c.getPreu()));
+			st.setString(3, c.getEstado());
+			st.setString(4, c.getHoraRealizacion());
+			st.setString(5, c.getHoraReserva());
 			
 			st2 = con.prepareStatement(DatabaseQueries.POST_ITEMS_RESERVA);
 			for(Menu m : c.getLlistaMenus()) {
