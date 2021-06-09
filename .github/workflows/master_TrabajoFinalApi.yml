@@ -23,9 +23,6 @@ jobs:
 
     - name: Build with Maven
       run: mvn clean install
-      
-    - name: mirar
-      run: tree '${{ github.workspace }}/target'
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v2
@@ -41,9 +38,6 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: ver que hay
-      run: ls
-      
     - name: Download artifact from build job
       uses: actions/download-artifact@v2
       with:
