@@ -33,7 +33,7 @@ public class DatabaseQueries {
 	public static final String DELETE_INGRES = "DELETE FROM Ingresos WHERE id = ?";
 	
 	public static final String GET_LLISTA_COMPLEMENTS = "SELECT Complementos.id, Complementos.nom, Complementos.preu FROM Complementos WHERE nom LIKE ?";
-	public static final String GET_LLISTA_COMPLEMENTS_PRODUCTE = "SELECT * FROM Complementos "
+	public static final String GET_LLISTA_COMPLEMENTS_PRODUCTE = "SELECT Complementos.id, Complementos.nom, Complementos.preu FROM Complementos "
 			+ "INNER JOIN ProductoComplementos "
 			+ "ON ProductosComplementos.complementoId = Complementos.id "
 			+ "WHERE ProductosComplementos.productoId = ?";

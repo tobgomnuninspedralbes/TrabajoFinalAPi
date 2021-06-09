@@ -17,7 +17,7 @@ import database.DatabaseQueries;
 /**
  * Servlet implementation class BloquejarReservesController
  */
-@WebServlet("/BloquejarReservesController")
+@WebServlet("/reservas/bloqueo")
 public class BloquejarReservesController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

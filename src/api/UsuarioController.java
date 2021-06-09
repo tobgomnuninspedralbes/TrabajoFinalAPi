@@ -139,5 +139,20 @@ public class UsuarioController extends HttpServlet {
 			}
 		}
 	}
-
+	
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.valueOf(request.getParameter("id"));
+		Connection con = null;
+		PreparedStatement st = null;
+		
+		con = DatabaseConnection.getConnection();
+		
+		try {
+			st = con.prepareStatement(DatabaseQueries.DELETE_USUARI);
+			st.setInt(1, id);
+			st.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }
