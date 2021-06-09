@@ -1,0 +1,107 @@
+DROP DATABASE IF EXISTS TrabajoFinalDB;
+CREATE DATABASE TrabajoFinalDB;
+USE TrabajoFinalDB
+CREATE TABLE Categorias (
+id INT NOT NULL AUTO_INCREMENT,
+nom VARCHAR(50),
+foto VARCHAR(100),
+PRIMARY KEY(id)
+) ENGINE = InnoDB ;
+
+CREATE TABLE Items (
+id INT NOT NULL AUTO_INCREMENT,
+PRIMARY KEY(id)
+) ENGINE = InnoDB ;
+
+CREATE TABLE Productos (
+id INT NOT NULL,
+nom VARCHAR(100),
+descripcion TEXT,
+preu DECIMAL(6,2),
+categoriaId INT,
+foto VARCHAR(100),
+PRIMARY KEY(id),
+FOREIGN KEY(id) REFERENCES Items(id) ON DELETE CASCADE,
+FOREIGN KEY(categoriaId) REFERENCES Categorias(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE Platos (
+id INT NOT NULL AUTO_INCREMENT,
+nom VARCHAR(100),
+foto VARCHAR(100),
+PRIMARY KEY(id)
+) ENGINE = InnoDB ;
+
+CREATE TABLE Menus (
+id INT NOT NULL,
+dia VARCHAR(100),
+mida INT(1),
+preu DECIMAL(6,2),
+primerPlatId INT,
+segonPlatId INT,
+PRIMARY KEY(id),
+FOREIGN KEY(id) REFERENCES Items(id),
+FOREIGN KEY(primerPlatId) REFERENCES Platos(id) ON DELETE CASCADE,
+FOREIGN KEY(segonPlatId) REFERENCES Platos(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE Usuarios (
+id INT NOT NULL AUTO_INCREMENT,
+id_token VARCHAR(100),
+refresh_token VARCHAR(255),
+saldo DECIMAL(4,2),
+PRIMARY KEY(id)
+) ENGINE = InnoDB ;
+
+CREATE TABLE Reservas (
+id INT NOT NULL AUTO_INCREMENT,
+preu DECIMAL(6,2),
+usuarioId INT,
+estado VARCHAR(20),
+fechaHoraRealizacion VARCHAR(50),
+fechaHoraReserva VARCHAR(50),
+PRIMARY KEY(id),
+FOREIGN KEY(usuarioId) REFERENCES Usuarios(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE Ingresos (
+id INT NOT NULL AUTO_INCREMENT,
+usuarioId INT,
+importe DECIMAL(6,2),
+fecha VARCHAR(50),
+PRIMARY KEY(id),
+FOREIGN KEY(usuarioId) REFERENCES Usuarios(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE Complementos (
+id INT NOT NULL AUTO_INCREMENT,
+nom VARCHAR(100),
+preu DECIMAL(4,2),
+PRIMARY KEY(id)
+) ENGINE = InnoDB ;
+
+CREATE TABLE ProductoComplemento (
+productoId INT NOT NULL,
+complementoId INT NOT NULL,
+PRIMARY KEY(productoId, complementoId),
+FOREIGN KEY(productoId) REFERENCES Productos(id) ON DELETE CASCADE,
+FOREIGN KEY(complementoId) REFERENCES Complementos(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE ReservaItem (
+id INT NOT NULL AUTO_INCREMENT,
+reservaId INT NOT NULL,
+itemId INT NOT NULL,
+tipus INT NOT NULL,
+PRIMARY KEY(id),
+FOREIGN KEY(reservaId) REFERENCES Reservas(id) ON DELETE CASCADE,
+FOREIGN KEY(itemId) REFERENCES Items(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
+
+CREATE TABLE ReservaItemComplemento (
+reservaItemId INT NOT NULL,
+complementoId INT NOT NULL,
+PRIMARY KEY(reservaItemId, complementoId),
+FOREIGN KEY(reservaItemId) REFERENCES ReservaItem(id) ON DELETE CASCADE,
+FOREIGN KEY(complementoId) REFERENCES Complementos(id) ON DELETE CASCADE
+) ENGINE = InnoDB ;
