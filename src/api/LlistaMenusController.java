@@ -73,18 +73,24 @@ public class LlistaMenusController extends HttpServlet {
 				rs1 = pst.executeQuery();
 				primerPlat.setId(rs1.getInt(1));
 				primerPlat.setNom(rs1.getString(2));
-				File foto = new File(rs1.getString(3));
-				String b64 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto));
-				primerPlat.setFoto(b64);
+				String f = rs1.getString(3);
+				if(f!=null) {
+					File foto = new File(f);
+					String b64 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto));
+					primerPlat.setFoto(b64);
+				}
 				c.setPrimerPlat(primerPlat);
 				
 				pst.setInt(1, sp);
 				rs1 = pst.executeQuery();
 				segonPlat.setId(rs1.getInt(1));
 				segonPlat.setNom(rs1.getString(2));
-				File foto1 = new File(rs1.getString(3));
-				String b641 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto1));
-				segonPlat.setFoto(b641);
+				f = rs1.getString(3);
+				if(f!=null) {
+					File foto1 = new File(f);
+					String b641 = Base64.getEncoder().encodeToString(FileUtils.readFileToByteArray(foto1));
+					segonPlat.setFoto(b641);
+				}
 				c.setSegonPlat(segonPlat);
 				
 				lista.add(c);

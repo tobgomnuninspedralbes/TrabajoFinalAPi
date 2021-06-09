@@ -63,12 +63,16 @@ public class CategoriaController extends HttpServlet {
 			Categoria c = new Gson().fromJson(request.getReader().readLine(), Categoria.class);
 			st.setString(1, c.getNom());
 			
-			byte[] decodedImg = Base64.getDecoder()
-                    .decode(c.getFoto().getBytes(StandardCharsets.UTF_8));
-			Path destinationFile = Paths.get("./fotos", "cat"+lastId+".jpg");
-			Files.write(destinationFile, decodedImg);
-
-			st.setString(2, destinationFile.toString());
+			if(c.getFoto() != null) {
+				byte[] decodedImg = Base64.getDecoder()
+	                    .decode(c.getFoto().getBytes(StandardCharsets.UTF_8));
+				Path destinationFile = Paths.get("./fotos", "cat"+lastId+".jpg");
+				Files.write(destinationFile, decodedImg);
+	
+				st.setString(2, destinationFile.toString());
+			} else {
+				st.setString(2, null);
+			}
 			st.execute();
 			
 			response.getWriter().append("Success");

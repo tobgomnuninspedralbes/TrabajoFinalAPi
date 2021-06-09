@@ -68,12 +68,15 @@ public class ProductoController extends HttpServlet {
 			rs = st2.executeQuery(DatabaseQueries.GET_ID_ULTIMA_PRODUCTE);
 			rs.next();
 			int lastId = rs.getInt(1);
-			byte[] decodedImg = Base64.getDecoder()
-                    .decode(c.getFoto().getBytes(StandardCharsets.UTF_8));
-			Path destinationFile = Paths.get("./fotos", "prod"+lastId+".jpg");
-			Files.write(destinationFile, decodedImg);
-
-			st.setString(4, destinationFile.toString());
+			if(c.getFoto()!=null) {
+				byte[] decodedImg = Base64.getDecoder()
+	                    .decode(c.getFoto().getBytes(StandardCharsets.UTF_8));
+				Path destinationFile = Paths.get("./fotos", "prod"+lastId+".jpg");
+				Files.write(destinationFile, decodedImg);
+				st.setString(4, destinationFile.toString());
+			} else {
+				st.setString(4, null);
+			}
 			
 			if(st.execute()) {
 				response.getWriter().append("Success");

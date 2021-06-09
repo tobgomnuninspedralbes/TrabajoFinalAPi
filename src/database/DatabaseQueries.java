@@ -45,6 +45,9 @@ public class DatabaseQueries {
 	public static final String GET_ITEMS_RESERVA = "SELECT ReservaItem.id, ReservaItem.itemId, ReservaItem.tipus FROM ReservaItem WHERE ReservaItem.reservaId = ?";
 	public static final String GET_COMPLEMENTS_PRODUCTE_RESERVA = "SELECT Complementos.id, Complementos.nom, Complementos.preu FROM ReservaItemComplemento "
 			+ "INNER JOIN Complementos ON ReservaItemComplemento.complementoId = Complementos.id WHERE reservaItemId = ?";
+	public static final String POST_ITEMS_RESERVA = "INSERT INTO ReservaItem(reservaId, itemId) VALUES (?,?)";
+	public static final String POST_PRODUCTOS_COMPLEMENTOS_RESERVA = "INSERT INTO ReservaItemComplemento(reservaItemId, complementoId) VALUES (?,?)";
+	public static final String GET_ID_ULTIMA_ITEM_RESERVA = "SELECT id FROM ReservaItem ORDER BY id DESC LIMIT 1";
 	
 	public static final String POST_RESERVA = "INSERT INTO Reservas(usuarioId,estado,fechaHoraRealizacion,fechaHoraReserva) VALUES (?,?,?,?)";
 	public static final String DELETE_RESERVA = "DELETE FROM Reservas WHERE id = ?";
