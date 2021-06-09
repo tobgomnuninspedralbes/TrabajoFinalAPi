@@ -82,6 +82,7 @@ public class LlistaProductosController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		response.getWriter().append("Fallo");
 	}
 	
 	public List<Complemento> getComplementos(int producto){
